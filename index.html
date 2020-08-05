@@ -21,26 +21,26 @@
           </form>
         </div>
         <script type="text/javascript">
-        function getLen() {
-            const value = document.querySelector('.form-control').value;
-            const array = JSON.parse(value);
-            const sortedArray = array.sort( ([first], [second]) => {
+            function getLen() {
+              const value = document.querySelector('.form-control').value;
+              const array = JSON.parse(value);
+              const sortedArray = array.sort(([first], [second]) => {
                 return first - second;
-            });
-            const mergedArray = [sortedArray[0]];
-            sortedArray.slice(1).reduce((previous, current) => {
-                if (current[0] > previous[1]) {
-                    mergedArray.push(current);
+              });
+              const mergedArray = [sortedArray[0]];
+              sortedArray.slice(1).forEach((item) => {
+                const lastItem = mergedArray[mergedArray.length - 1];
+                if (item[0] <= lastItem[1]) {
+                  if (item[1] > lastItem[1]) {
+                    lastItem[1] = item[1];
+                  }
                 } else {
-                    const lastItem = mergedArray[mergedArray.length - 1];
-                    lastItem[1] = current[1];
+                  mergedArray.push(item);
                 }
-                return current;
-            }, []);
-     
-            const result = mergedArray.reduce((memo, item) => memo + (item[1] - item[0]), 0);
-            document.getElementById("result").innerHTML = result;
-        }
+              });
+              const result = mergedArray.reduce((memo, item) => memo + (item[1] - item[0]), 0);
+              document.getElementById("result").innerHTML = result;
+            }
       </script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
